@@ -1,0 +1,616 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>CSS Selectors - Yevhen Isakov @ KharkivCSS #2</title>
+
+		<meta name="description" content="CSS Selectors">
+		<meta name="author" content="Yevhen Isakov">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/epam.css" id="theme">
+
+        <link rel="stylesheet" href="css/my.css" />
+
+        <!-- For syntax highlighting -->
+		<link rel="stylesheet" href="lib/css/user.css">
+
+		<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+		<script>
+			if( window.location.search.match( /print-pdf/gi ) ) {
+				var link = document.createElement( 'link' );
+				link.rel = 'stylesheet';
+				link.type = 'text/css';
+				link.href = 'css/print/pdf.css';
+				document.getElementsByTagName( 'head' )[0].appendChild( link );
+			}
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+
+			<div class="slides">
+
+				<section data-state="mainpage" data-transition="slide">
+					<h1><span class="coloured-symbols coloured-symbols_blue">CSS</span> Selectors</h1>
+					<br>
+					<h3>Yevhen Isakov</h3>
+					<time datetime="2017-04-22">22 April, 2017</time>
+				</section>
+
+				<section class="zoom">
+					<div class="tagcloud">
+						<div style="left: 61%;top: 38%;" class="css1 -e">E</div>
+						<div style="left: 53%;top: 30%;" class="css1 -class">#id</div>
+						<div style="left: 46%;top: 38%;" class="css1 -id">.class</div>
+						<div style="left: 12%;top: 34%;" class="css1 -link">:link</div>
+						<div style="left: -5%;top: 42%;" class="css1 -active">:active</div>
+						<div style="left: 11%;top: 42%;" class="css1 -visited">:visited</div>
+						<div style="right: 42%;top: 55%;" class="css1 -first-line">:first-line</div>
+						<div style="right: 40%;top: 48%;" class="css1 -first-letter">:first-letter</div>
+						<div style="right: 42%;top: 55%;" class="css3 -first-line">::first-line</div>
+						<div style="right: 40%;top: 48%;" class="css3 -first-letter">::first-letter</div>
+						<div style="left: 77%;top: 29%;" class="css1 -cascade">E F</div>
+						<div style="left: 88%;top: 29%;" class="css2 -universal">*</div>
+						<div style="left: 96%;top: 29%;" class="css2 -child">E &gt; F</div>
+						<div style="left: 12%;top: 50%;" class="css2 -hover">:hover</div>
+						<div style="left: -2%;top: 34%;" class="css2 -focus">:focus</div>
+						<div style="left: 31%;top: 26%;" class="css1 -lang">:lang(c)</div>
+						<div style="left: 79%;top: 37%;" class="css2 -adjacent">E + F</div>
+						<div style="left: 67%;top: 71%;" class="css2 -attribute">[foo]</div>
+						<div style="left: 76%;top: 64%;" class="css2 -attribute-2">[foo="bar"]</div>
+						<div style="left: 48%;top: 64%;" class="css2 -attribute-3">[foo~="bar"]</div>
+						<div style="left: 40%;top: 71%;" class="css3 -attribute-4">[foo|="bar"]</div>
+						<div style="left: 83%;top: 71%;" class="css3 -attribute-5">[foo*="bar"]</div>
+						<div style="left: 48%;top: 78%;" class="css3 -attribute-6">[foo$="bar"]</div>
+						<div style="left: 76%;top: 78%;" class="css3 -attribute-7">[foo^="bar"]</div>
+						<div style="left: 71%;top: 50%;" class="css3 -root">:root</div>
+						<div style="left: 22%;top: 17%;" class="css2 -first-child">:first-child</div>
+						<div style="left: 70%;top: 17%;" class="css3 -last-child">:last-child</div>
+						<div style="left: 46%;top: 17%;" class="css3 -nth-child">:nth-child(n)</div>
+						<div style="left: 61%;top: 9%;" class="css3 -nth-last-child">:nth-last-child(n)</div>
+						<div style="left: 16%;top: 1%;" class="css3 -first-of-type">:first-of-type</div>
+						<div style="left: 73%;top: 1%;" class="css3 -last-of-type">:last-of-type</div>
+						<div style="left: 44%;top: 1%;" class="css3 -nth-of-type">:nth-of-type(n)</div>
+						<div style="left: 20%;top: 9%;" class="css3 -nth-last-of-type">:nth-last-of-type(n)</div>
+						<div style="left: 32%;top: -7%;" class="css3 -only-child">:only-child</div>
+						<div style="left: 57%;top: -7%;" class="css3 -only-of-type">:only-of-type</div>
+						<div style="left: 88%;top: 88%;" class="css3 -empty">:empty</div>
+						<div style="left: -3%;top: 50%;" class="css3 -target">:target</div>
+						<div style="left: -7%;top: 58%;" class="css3 -enabled">:enabled</div>
+						<div style="left: 9%;top: 58%;" class="css3 -disabled">:disabled</div>
+						<div style="left: 3%;top: 66%;" class="css3 -checked">:checked</div>
+						<div style="right: -3%;top: 47%;" class="css2 -before">:before</div>
+						<div style="right: -2%;top: 55%;" class="css2 -after">:after</div>
+						<div style="right: -3%;top: 47%;" class="css3 -before-css3">::before</div>
+						<div style="right: -2%;top: 55%;" class="css3 -after-css3">::after</div>
+						<div style="left: 96%;top: 10%;" class="css3 -not">:not(s)</div>
+						<div style="left: 93%;top: 37%;" class="css -sibling">E ~ F</div>
+						<div style="left: 11%;top: 82%;" class="css4 -required">:required</div>
+						<div style="left: -8%;top: 82%;" class="css4 -optional">:optional</div>
+						<div style="left: -5%;top: 74%;" class="css4 -valid">:valid</div>
+						<div style="left: 9%;top: 74%;" class="css4 -invalid">:invalid</div>
+						<div style="left: -3%;top: 90%;" class="css4 -indeterminate">:indeterminate</div>
+						<div style="left: 43%;top: 95%;" class="css3 -selection">::selection</div>
+						<div style="left: 42%;top: 88%;" class="css3 -placeholder">::placeholder</div>
+						<div style="left: 96%;top: 18%;" class="css4 -not-css4">:not(s1, s2)</div>
+						<div style="left: -5%;top: 24%;" class="css4 -matches">:matches(s1, s2)</div>
+						<div style="left: 69%;top: 95%;" class="css4 -has-css4">:has(rs1, rs2)</div>
+					</div>
+				</section>
+
+				<section>
+					<h2>By Specs Levels</h2>
+				</section>
+
+				<section class="zoom">
+					<div class="tagcloud">
+						<ul>
+							<li class="css1">
+
+								<div style="left: 61%;top: 38%;" class="css1 -e">E</div>
+								<div style="left: 53%;top: 30%;" class="css1 -class">#id</div>
+								<div style="left: 46%;top: 38%;" class="css1 -id">.class</div>
+
+								<div style="left: 12%;top: 34%;" class="css1 -link">:link</div>
+								<div style="left: -5%;top: 42%;" class="css1 -active">:active</div>
+								<div style="left: 11%;top: 42%;" class="css1 -visited">:visited</div>
+								<div style="right: 42%;top: 55%;" class="css1 -first-line">:first-line</div>
+								<div style="right: 40%;top: 48%;" class="css1 -first-letter">:first-letter</div>
+								<div style="left: 77%;top: 29%;" class="css1 -cascade">E F</div>
+								<div style="left: 31%;top: 26%;" class="css1 -lang">:lang(c)</div>
+							</li>
+							<li class="css2 fragment">
+								<div style="left: 22%;top: 17%;" class="css2 -first-child">:first-child</div>
+								<div style="left: 88%;top: 29%;" class="css2 -universal">*</div>
+								<div style="left: 96%;top: 29%;" class="css2 -child">E &gt; F</div>
+								<div style="left: 12%;top: 50%;" class="css2 -hover">:hover</div>
+								<div style="left: -2%;top: 34%;" class="css2 -focus">:focus</div>
+								<div style="left: 79%;top: 37%;" class="css2 -adjacent">E + F</div>
+								<div style="left: 67%;top: 71%;" class="css2 -attribute">[foo]</div>
+								<div style="left: 76%;top: 64%;" class="css2 -attribute-2">[foo="bar"]</div>
+								<div style="left: 48%;top: 64%;" class="css2 -attribute-3">[foo~="bar"]</div>
+								<div style="right: -3%;top: 47%;" class="css2 -before">:before</div>
+								<div style="right: -2%;top: 55%;" class="css2 -after">:after</div>
+							</li>
+							<li class="css3 fragment">
+								<div style="right: 42%;top: 55%;" class="css3 -first-line">::first-line</div>
+								<div style="right: 40%;top: 48%;" class="css3 -first-letter">::first-letter</div>
+								<div style="left: 40%;top: 71%;" class="css3 -attribute-4">[foo|="bar"]</div>
+								<div style="left: 83%;top: 71%;" class="css3 -attribute-5">[foo*="bar"]</div>
+								<div style="left: 48%;top: 78%;" class="css3 -attribute-6">[foo$="bar"]</div>
+								<div style="left: 76%;top: 78%;" class="css3 -attribute-7">[foo^="bar"]</div>
+								<div style="left: 71%;top: 50%;" class="css3 -root">:root</div>
+								<div style="left: 70%;top: 17%;" class="css3 -last-child">:last-child</div>
+								<div style="left: 46%;top: 17%;" class="css3 -nth-child">:nth-child(n)</div>
+								<div style="left: 61%;top: 9%;" class="css3 -nth-last-child">:nth-last-child(n)</div>
+								<div style="left: 16%;top: 1%;" class="css3 -first-of-type">:first-of-type</div>
+								<div style="left: 73%;top: 1%;" class="css3 -last-of-type">:last-of-type</div>
+								<div style="left: 44%;top: 1%;" class="css3 -nth-of-type">:nth-of-type(n)</div>
+								<div style="left: 20%;top: 9%;" class="css3 -nth-last-of-type">:nth-last-of-type(n)</div>
+								<div style="left: 32%;top: -7%;" class="css3 -only-child">:only-child</div>
+								<div style="left: 57%;top: -7%;" class="css3 -only-of-type">:only-of-type</div>
+								<div style="left: 88%;top: 91%;" class="css3 -empty">:empty</div>
+								<div style="left: -3%;top: 50%;" class="css3 -target">:target</div>
+								<div style="left: -7%;top: 58%;" class="css3 -enabled">:enabled</div>
+								<div style="left: 9%;top: 58%;" class="css3 -disabled">:disabled</div>
+								<div style="left: 3%;top: 66%;" class="css3 -checked">:checked</div>
+								<div style="right: -3%;top: 47%;" class="css3 -before-css3">::before</div>
+								<div style="right: -2%;top: 55%;" class="css3 -after-css3">::after</div>
+								<div style="left: 96%;top: 10%;" class="css3 -not">:not(s)</div>
+								<div style="left: 93%;top: 37%;" class="css3 -sibling">E ~ F</div>
+								<div style="left: 43%;top: 95%;" class="css3 -selection">::selection</div>
+								<div style="left: 42%;top: 88%;" class="css3 -placeholder">::placeholder</div>
+							</li>
+							<li class="css4 fragment">
+								<div style="left: 11%;top: 82%;" class="css4 -required">:required</div>
+								<div style="left: -8%;top: 82%;" class="css4 -optional">:optional</div>
+								<div style="left: -5%;top: 74%;" class="css4 -valid">:valid</div>
+								<div style="left: 9%;top: 74%;" class="css4 -invalid">:invalid</div>
+								<div style="left: -3%;top: 90%;" class="css4 -indeterminate">:indeterminate</div>
+								<div style="left: 96%;top: 18%;" class="css4 -not-css4">:not(s1, s2)</div>
+								<div style="left: -5%;top: 24%;" class="css4 -matches">:matches(s1, s2)</div>
+								<div style="left: 69%;top: 95%;" class="css4 -has-css4">:has(rs1, rs2)</div>
+							</li>
+						</ul>
+					</div>
+				</section>
+
+				<section>
+					<h2><a href="https://www.w3.org/TR/REC-CSS1/" target="_blank">CSS 1</a></h2>
+					<p><time datetime="1996-12-17">17 Dec 1996</time></p>
+				</section>
+
+				<section>
+					<h2 class="main-selector"><code>E</code></h2>
+				</section>
+
+				<section>
+					<h2 class="main-selector"><code>.class</code></h2>
+				</section>
+
+				<section>
+					<h2 class="main-selector"><code>#id</code></h2>
+				</section>
+
+				<section>
+					<h2 class="main-selector"><code>E F</code></h2>
+				</section>
+
+				<section>
+					<h2 class="main-selector"><code>:link</code></h2>
+					<h2 class="main-selector fragment"><code>:active</code></h2>
+					<h2 class="main-selector fragment"><code>:visited</code></h2>
+					<div class="fragment example">
+						<pre><code class="css">:link { color: #bada55; }
+:visited { color: #fa5507; }
+:active { color: #720115; }</code></pre>
+					</div>
+				</section>
+
+				<section>
+					<h2 class="main-selector"><code>:first-line</code></h2>
+					<h2 class="main-selector"><code>:first-letter</code></h2>
+					<div class="fragment example">
+						<pre><code class="css">p:first-line { font-weight: bold; }
+
+p:first-letter { font-size: 3em; }</code></pre>
+					</div>
+				</section>
+
+				<section>
+					<h2><a href="https://www.w3.org/TR/REC-CSS2/selector.html" target="_blank">CSS 2</a></h2>
+					<time datetime="1998-0512">12 May 1998</time>
+				</section>
+				
+				<section>
+					<h2 class="main-selector"><code>*</code></h2>
+					<div class="example fragment">
+						<pre><code class="css">* {
+	margin: 0;
+	padding: 0;
+	}</code></pre>
+					</div>
+				</section>
+
+				<section>
+					<h2 class="main-selector"><code>E > F</code></h2>
+					<div class="fragment example">
+						<pre><code>ul > li { color: red; }
+
+table td > div { position: relative; }</code></pre>
+					</div>
+				</section>
+
+				<section>
+					<h2 class="main-selector"><code>:first-child</code></h2>
+					<div class="example fragment">
+						<pre><code class="css">li:first-child { margin-left: 0; }</code></pre>
+					</div>
+				</section>
+
+				<section>
+					<h2 class="main-selector"><code>:hover</code></h2>
+					<div class="fragment example">
+						<pre><code class="css">a:hover { text-decoration: underline; }</code></pre>
+					</div>
+				</section>
+
+				<section>
+					<h2 class="main-selector"><code>:focus</code></h2>
+					<div class="fragment example">
+						<pre><code class="css">input:focus { outline: 1px solid orange; }</code></pre>
+					</div>
+				</section>
+
+				<section>
+					<h2 class="main-selector"><code>:lang(c)</code></h2>
+					<div class="fragment example">
+						<pre><code class="css">q::before { content: open-quote; }
+q::after { content: close-quote; }
+
+:lang(en) q { quotes: '“' '”'; }
+:lang(fr) q { quotes: '«' '»'; }
+:lang(de) q { quotes: '»' '«'; }</code></pre>
+					</div>
+				</section>
+
+				<section>
+					<h2 class="main-selector"><code>E + F</code></h2>
+					<div class="fragment example">
+						<pre><code class="css">label + input { margin-left: 10px; }</code></pre>
+					</div>
+				</section>
+
+				<section>
+					<h2 class="main-selector"><code>[foo]</code></h2>
+					<h2 class="main-selector"><code>[foo="bar"]</code></h2>
+					<h2 class="main-selector"><code>[foo~="bar"]</code></h2>
+					<div class="fragment example">
+						<pre><code class="css">input[disabled] { opacity: .8; }
+[data-component="carousel"] { position: relative; }
+[data-content~="hello"] { font-style: italic; }</code></pre>
+					</div>
+				</section>
+
+				<!-- end of CSS 2 -->
+
+				<!-- CSS 3 -->
+
+				<section>
+					<h2><a href="https://www.w3.org/TR/css3-selectors/" target="_blank">CSS Selectors Level 3</a></h2>
+					<time datetime="2011-09-29">29 Sep 2011</time>
+				</section>
+
+				<section>
+					<h2 class="main-selector"><code>::before</code></h2>
+					<h2 class="main-selector"><code>::after</code></h2>
+					<div class="fragment example">
+						<pre><code class="css">.clearfix::before,
+.clearfix::after {
+	content: '';
+	display: table;
+	}</code></pre></div>
+				</section>
+
+				<section>
+					<h2 class="main-selector"><code>:target</code></h2>
+				</section>
+
+				<section>
+					<p data-height="600" data-theme-id="0" data-slug-hash="ybOQoY" data-default-tab="result" data-user="vend3tta" data-embed-version="2" data-pen-title="Pure css popup box" class="codepen">See the Pen <a href="https://codepen.io/vend3tta/pen/ybOQoY/">Pure css popup box</a> by vend3tta (<a href="http://codepen.io/vend3tta">@vend3tta</a>) on <a href="http://codepen.io">CodePen</a>.</p>
+					<script async src="https://production-assets.codepen.io/assets/embed/ei.js"></script>
+				</section>
+
+				<section>
+					<div>
+						<pre><code class="xml"><a class="button" href="#popup1">Pop me up</a>
+
+<div id="popup1" class="overlay">
+	<div class="popup"></div>
+</div></code></pre>
+					</div>
+					<div class="fragment">
+						<pre><code class="css">.overlay {
+	visibility: hidden;
+	opacity: 0;
+	...
+	}
+
+.overlay:target {
+	visibility: visible;
+	opacity: 1;
+	}</code></pre>
+					</div>
+				</section>
+
+				<section>
+					<h2 class="main-selector"><code>E ~ F</code></h2>
+				</section>
+
+				<section>
+					<p data-height="600" data-theme-id="0" data-slug-hash="bWpmea" data-default-tab="result" data-user="vend3tta" data-embed-version="2" data-pen-title="bWpmea" class="codepen">See the Pen <a href="https://codepen.io/vend3tta/pen/bWpmea/">bWpmea</a> by vend3tta (<a href="http://codepen.io/vend3tta">@vend3tta</a>) on <a href="http://codepen.io">CodePen</a>.</p>
+					<script async src="https://production-assets.codepen.io/assets/embed/ei.js"></script>
+				</section>
+
+				<section>
+					<div>
+						<pre><code class="xml"><a class="start" id="start" href="#start"></a>
+<a class="pause" id="pause" href="#pause"></a>
+<a class="stop" id="stop" href="#stop"></a>
+<div class="timer"> ... </div></code></pre>
+					</div>
+					<div class="fragment">
+						<pre><code class="css">.start:target ~ .timer,
+.pause:target ~ .timer {
+	animation-name: timer;
+	}
+
+.pause:target ~ .timer {
+	animation-play-state: paused;
+	}
+
+.stop:target ~ .timer {
+	animation-name: reset;
+	}</code></pre>
+					</div>
+				</section>
+
+				<section>
+					<h2 class="main-selector"><code>:checked</code></h2>
+				</section>
+
+				<section>
+					<p data-height="600" data-theme-id="0" data-slug-hash="wdWKyZ" data-default-tab="result" data-user="vend3tta" data-embed-version="2" data-pen-title="wdWKyZ" class="codepen">See the Pen <a href="https://codepen.io/vend3tta/pen/wdWKyZ/">wdWKyZ</a> by vend3tta (<a href="http://codepen.io/vend3tta">@vend3tta</a>) on <a href="http://codepen.io">CodePen</a>.</p>
+					<script async src="https://production-assets.codepen.io/assets/embed/ei.js"></script>
+				</section>
+
+				<section>
+					<pre><code class="xml"><input type="radio" name="control" id="slide-1" checked />
+		...
+
+<div class="slider">
+	<div class="slider-content">
+		<div class="slide-1"><img src="..." alt="" /></div>
+		...
+	</div>
+
+	<div class="slider-control-container">
+		<label for="slide-1" class="slider-control"></label>
+		...
+	</div>
+</div></code></pre>
+					<pre><code class="css">#slide-1:checked ~ .slider .slide-1 {
+	z-index: 1;
+	}
+
+#slide-1:checked ~ .slider [for="slide-1"] {
+	opacity: 1;
+	}</code></pre>
+				</section>
+
+				<section>
+					<h2 class="main-selector"><code>:last-child</code></h2>
+				</section>
+
+				<section>
+					<p data-height="300" data-theme-id="0" data-slug-hash="PmNXLb" data-default-tab="result" data-user="vend3tta" data-embed-version="2" data-pen-title="PmNXLb" class="codepen">See the Pen <a href="https://codepen.io/vend3tta/pen/PmNXLb/">PmNXLb</a> by vend3tta (<a href="http://codepen.io/vend3tta">@vend3tta</a>) on <a href="http://codepen.io">CodePen</a>.</p>
+					<script async src="https://production-assets.codepen.io/assets/embed/ei.js"></script>
+					<div class="fragment">
+						<pre><code class="css">li:first-child { ... }
+// or
+li:last-child { ... }</code></pre>
+					</div>
+					<div class="fragment">
+						<pre><code class="css">li + li { ... }
+// or
+li ~ li { ... }</code></pre>
+					</div>
+					<div class="fragment">
+						<pre><code class="css">li:not(:first-child) { ... }
+// or
+li:not(:last-child) { ... }</code></pre>
+					</div>
+				</section>
+
+				<section>
+					<h2 class="main-selector"><code>:nth-child</code> <span class="fragment" style="font-size:.5em;">... and his brothers</span></h2>
+				</section>
+
+				<section>
+					<p data-height="600" data-theme-id="0" data-slug-hash="qmNNWq" data-default-tab="result" data-user="vend3tta" data-embed-version="2" data-pen-title="qmNNWq" class="codepen">See the Pen <a href="https://codepen.io/vend3tta/pen/qmNNWq/">qmNNWq</a> by vend3tta (<a href="http://codepen.io/vend3tta">@vend3tta</a>) on <a href="http://codepen.io">CodePen</a>.</p>
+					<script async src="https://production-assets.codepen.io/assets/embed/ei.js"></script>
+				</section>
+
+				<section>
+					<h2 class="main-selector"><code>:root</code></h2>
+					<div class="fragment example">
+						<pre><code class="css">:root {
+	--default-text-color: #444;
+	--default-link-color: #1561d9;
+	--default-link-hover-color: #226719;
+	}</code></pre>
+					</div>
+				</section>
+
+				<section>
+					<h2 class="main-selector"><code>:valid</code></h2>
+					<h2 class="main-selector"><code>:invalid</code></h2>
+					<h2 class="main-selector fragment"><code>:required</code></h2>
+				</section>
+
+				<section>
+					<p data-height="600" data-theme-id="0" data-slug-hash="pPyQaj" data-default-tab="result" data-user="vend3tta" data-embed-version="2" data-pen-title="pPyQaj" class="codepen">See the Pen <a href="https://codepen.io/vend3tta/pen/pPyQaj/">pPyQaj</a> by vend3tta (<a href="http://codepen.io/vend3tta">@vend3tta</a>) on <a href="http://codepen.io">CodePen</a>.</p>
+					<script async src="https://production-assets.codepen.io/assets/embed/ei.js"></script>
+				</section>
+
+				<section>
+					<h2 class="main-selector"><code>::placeholder</code></h2>
+				</section>
+
+				<section>
+					<div>
+						<input type="text" class="input-text" placeholder="Placeholder" />
+					</div>
+					<div class="fragment">
+						<input type="text" class="input-text placeholder-fixed" placeholder="Placeholder" />
+					</div>
+					<div class="fragment">
+						<pre><code class="css">
+input:focus::placeholder {
+	color: transparent;
+	}
+						</code></pre>
+					</div>
+					<div class="fragment">
+						<input type="text" class="input-text placeholder-shown" placeholder="Placeholder" value="Lorem ipsum" />
+					</div>
+					<div class="fragment">
+						<pre><code class="css">input:placeholder-shown {
+	outline: 5px solid #fe57al;
+	}</code></pre>
+					</div>
+				</section>
+
+				<section>
+					<h2>What about future?</h2>
+					<div class="fragment"><a href="https://www.w3.org/TR/selectors4/" target="_blank">CSS Selectors Level 4</a></div>
+					<div class="fragment"><a href="https://drafts.csswg.org/selectors-4/" target="_blank" style="color: #b22746;">Editor Draft</a></div>
+				</section>
+
+				<section>
+					<h2 class="main-selector"><code>:matches()</code></h2>
+					<div class="fragment example">
+						<pre><code class="css">input:matches([type="checkbox"], [type="radio"]) { ... }</code></pre>
+					</div>
+				</section>
+
+				<section>
+					<h2 class="main-selector"><code>:has()</code></h2>
+					<div class="example fragment">
+						<pre><code class="css">a:has(> img) { ... }
+
+section:not(:has(h1, h2, h3, h4, h5, h6)) { ... }</code></pre>
+					</div>
+				</section>
+
+				<section>
+					<h2 class="main-selector"><code>:not(s1, s2)</code></h2>
+					<div class="fragment example">
+						<pre><code class="css">input:not([disabled], [hidden])</code></pre>
+					</div>
+				</section>
+
+				<section>
+					<h2 class="main-selector"><code>E <span class="fragment">>></span> F</code></h2>
+				</section>
+
+				<section><h2>What we miss?</h2></section>
+
+				<section>
+					<h2 class="main-selector"><code>!E F</code></h2>
+					<div class="fragment example">
+						<pre><code class="css">!ul li.special { ... }</code></pre>
+					</div>
+					<h2 class="fragment"><code>E !F Q</code></h2>
+					<div class="fragment">
+						<pre><code class="css">dl !dt img { ... }</code></pre>
+					</div>
+				</section>
+
+				<section>
+					<h2 class="main-selector"><code>E ← F</code></h2>
+					<h2 class="fragment"><code>!E ~ F</code></h2>
+				</section>
+
+				<section>
+					<h2 class="main-selector"><code>::before::before</code></h2>
+					<h2 class="main-selector fragment"><code>::before(n)</code></h2>
+				</section>
+
+				<section>
+					<h2 class="main-selector"><a href="http://css1k.net/" target="_blank">css1k.net</a></h2>
+				</section>
+
+				<section data-state="thank-you">
+                    <h2 class="coloured-symbols coloured-symbols_blue">Thank you</h2>
+	                <div>Questions?</div>
+                </section>
+			</div>
+
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+
+			// Full list of configuration options available here:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: false,
+				progress: true,
+				history: true,
+				center: true,
+                slideNumber: true,
+
+				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+				transition: Reveal.getQueryHash().transition || 'fade', // default/cube/page/concave/zoom/linear/fade/none
+                transitionSpeed: 'fast',
+
+				// Parallax scrolling
+				// parallaxBackgroundImage: 'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg',
+				// parallaxBackgroundSize: '2100px 900px',
+
+				// Optional libraries used to extend on reveal.js
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+					{ src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+				]
+			});
+
+		</script>
+        <script>
+            Reveal.configure({backgroundTransition: 'fade'});
+        </script>
+	</body>
+</html>
